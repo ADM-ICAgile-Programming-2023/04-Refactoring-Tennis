@@ -1,3 +1,6 @@
+using System;
+using System.Data;
+
 namespace Tennis
 {
     public class TennisGame1 : ITennisGame
@@ -33,34 +36,26 @@ namespace Tennis
             }
             else
             {
-                for (var i = 1; i < 3; i++)
-                {
-                    score = ScoreDefault(i, score, tempScore);
-                }
+                score = translateScores(m_score1) + "-" + translateScores(m_score2);
             }
             return score;
         }
 
-        private string ScoreDefault(int i, string score, int tempScore) 
+        private string translateScores(int score)
         {
-            if (i == 1) tempScore = m_score1;
-            else { score += "-"; tempScore = m_score2; }
-            switch (tempScore)
+            switch (score)
             {
                 case 0:
-                    score += "Love";
-                    break;
+                    return "Love";
                 case 1:
-                    score += "Fifteen";
-                    break;
+                    return "Fifteen";
                 case 2:
-                    score += "Thirty";
-                    break;
+                    return "Thirty";
                 case 3:
-                    score += "Forty";
-                    break;
+                    return "Forty";
+                default:
+                    throw new InvalidExpressionException();
             }
-            return score;
         }
 
         private string ScoreAreAdvantage(int m_score1, int m_score2)
