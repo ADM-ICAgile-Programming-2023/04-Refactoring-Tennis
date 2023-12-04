@@ -4,13 +4,11 @@ namespace Tennis
     {
         private int m_score1 = 0;
         private int m_score2 = 0;
-        private string player1Name;
-        private string player2Name;
+
 
         public TennisGame1(string player1Name, string player2Name)
         {
-            this.player1Name = player1Name;
-            this.player2Name = player2Name;
+            
         }
 
         public void WonPoint(string playerName)
@@ -27,22 +25,7 @@ namespace Tennis
             var tempScore = 0;
             if (m_score1 == m_score2)
             {
-                switch (m_score1)
-                {
-                    case 0:
-                        score = "Love-All";
-                        break;
-                    case 1:
-                        score = "Fifteen-All";
-                        break;
-                    case 2:
-                        score = "Thirty-All";
-                        break;
-                    default:
-                        score = "Deuce";
-                        break;
-
-                }
+                score = ScoreAreEqual(m_score1);
             }
             else if (m_score1 >= 4 || m_score2 >= 4)
             {
@@ -75,6 +58,28 @@ namespace Tennis
                     }
                 }
             }
+            return score;
+        }
+
+        private string ScoreAreEqual(int scoreInt)
+        {
+            string score;
+            switch (scoreInt)
+            {
+                case 0:
+                    score = "Love-All";
+                    break;
+                case 1:
+                    score = "Fifteen-All";
+                    break;
+                case 2:
+                    score = "Thirty-All";
+                    break;
+                default:
+                    score = "Deuce";
+                    break;
+            }
+
             return score;
         }
     }
