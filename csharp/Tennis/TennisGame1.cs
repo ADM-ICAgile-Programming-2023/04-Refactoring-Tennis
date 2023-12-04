@@ -5,8 +5,8 @@ namespace Tennis
 {
     public class TennisGame1 : ITennisGame
     {
-        private int m_score1 = 0;
-        private int m_score2 = 0;
+        private int player1Score;
+        private int player2Score;
 
 
         public TennisGame1(string player1Name, string player2Name)
@@ -17,27 +17,27 @@ namespace Tennis
         public void WonPoint(string playerName)
         {
             if (playerName == "player1")
-                m_score1 += 1;
+                player1Score += 1;
             else
-                m_score2 += 1;
+                player2Score += 1;
         }
 
         public string GetScore()
         {
-            if (m_score1 == m_score2)
+            if (player1Score == player2Score)
             {
-                return ScoreAreEqual(m_score1);
+                return ScoreAreEqual(player1Score);
             }
 
-            if (m_score1 >= 4 || m_score2 >= 4)
+            if (player1Score >= 4 || player2Score >= 4)
             {
-                return ScoreAreAdvantage(m_score1, m_score2);
+                return ScoreAreAdvantage(player1Score, player2Score);
             }
 
-            return translateScores(m_score1) + "-" + translateScores(m_score2);
+            return TranslateScores(player1Score) + "-" + TranslateScores(player2Score);
         }
 
-        private string translateScores(int score)
+        private string TranslateScores(int score)
         {
             switch (score)
             {
@@ -54,21 +54,26 @@ namespace Tennis
             }
         }
 
-        private string ScoreAreAdvantage(int m_score1, int m_score2)
+        private string ScoreAreAdvantage(int player1Score, int player2Score)
         {
-            var minusResult = m_score1 - m_score2;
 
-            if (minusResult == 1) return "Advantage player1";
+            if (IsPlayerAdvantage(player1Score, player2Score)) return "Advantage player1";
 
-            if (minusResult == -1)
+            if (IsPlayerAdvantage(player2Score, player1Score))
             {
                 return "Advantage player2";
             }
 
-            if (minusResult >= 2) return "Win for player1";
-
-            return "Win for player2";
+            return player1Score > player2Score ? "Win for player1" : "Win for player2";
         }
+
+        private static bool IsPlayerAdvantage(int player1Score, int player2Score)
+        {
+            var minusResult = player1Score - player2Score;
+            return minusResult == 1;
+        }
+
+
 
         private string ScoreAreEqual(int scoreInt)
         {
